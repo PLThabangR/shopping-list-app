@@ -1,26 +1,104 @@
+import { useUser } from "@/gobal state/userState";
+import type { User } from "@/types/User";
 import { useState } from "react"
+import { toast } from "sonner";
+
+
 
 
 const Registration = () => {
-    const [user, setUser] = useState({
+   //Form state
+    const [user, setUser] = useState<User>({
         firstName: '',
         lastName: '',
         email: '',
         password: '',
-        cellNumber:''
+        cellNumber:0
     })
 
-    const [checkBox,setCheckBox] = useState(false)
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    //Send data to json server
+   
+
+        //Checkbox state
+    const [checkBox,setCheckBox] = useState(false);
+
+    //user reducer
+    const {state,dispatch} = useUser();
+    const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
         if(!checkBox){
-            alert("Please accept the terms and conditions")
+            toast.error("Please accept the terms",{
+             
+               duration:5000,
+               richColors:true,
+               action:{
+                 label:"Accept",
+                 onClick:() => setCheckBox(true)
+               }
+
+              
+            })
             return
-        }
-        console.log(user)
+        }//End of if statement
+         //validation goes here
+         if(user.password.length < 5){
+            toast.error("Password must be at least 5 characters",{
+                duration:5000,
+                richColors:true
+            })
+            return
+         }// End of if statement
+
+          //Check if email is valid using regular expression
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(user.email)) {
+        toast.error("Please enter a valid email address",{
+            duration:5000,
+            richColors:true
+        })
+        return
+    }//End of if statement
+
+    //Check if phone number is valid
+    if(user.cellNumber.toString().length !== 10){
+        toast.error("Please enter a valid phone number",{
+            duration:5000,
+            richColors:true
+        })
+        return
+    }//end of if statement
+
+    if(user.firstName.length < 2 || user.lastName.length < 2){
+        toast.error("First name and last name must be at least 2 characters",{
+            duration:5000,
+            richColors:true
+        })
+        return
+    }//end of if statement 
+
+    //User before sending to json server
+   
+        const response = await fetch("http://localhost:8000/users",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(user) //Convert user object javascript string 
+        })
+            //Get response and convert to javascript json
+        const data = await response.json();
+       
+        console.log("new user ",data)
+        dispatch({type:"SET_USER",payload:data});
+
+        toast.success("Registration successful",{
+            duration:5000,
+            richColors:true
+        })
+     
         
       }
+
+
 
   return (
     <div className="container p-5">
