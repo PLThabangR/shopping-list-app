@@ -1,6 +1,6 @@
 import { useUser } from "@/gobal state/userState";
 import type { User } from "@/types/User";
-import { useState } from "react"
+import { use, useEffect, useState } from "react"
 import { toast } from "sonner";
 
 
@@ -77,6 +77,16 @@ const Registration = () => {
         return
     }//end of if statement 
 
+    //check if user already exists
+    const existingUser = state.users.find((u) => u.email === user.email);
+    if(existingUser){
+        toast.error("User already exists",{
+            duration:5000,
+            richColors:true
+        })
+        return
+    }   
+
     //User before sending to json server
    
         const response = await fetch("http://localhost:8000/users",{
@@ -84,21 +94,45 @@ const Registration = () => {
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(user) //Convert user object javascript string 
         })
-            //Get response and convert to javascript json
-        const data = await response.json();
-       
-        console.log("new user ",data)
-        dispatch({type:"SET_USER",payload:data});
-
-        toast.success("Registration successful",{
+        //Check if response is ok
+        if(!response.ok){
+            toast.error("Registration failed",{
+                duration:5000,
+                richColors:true
+            })
+        }
+           
+       //Check if response is ok
+        if(response.ok){
+             //Get response and convert to javascript json
+             const data = await response.json();
+             //set user
+ dispatch({type:"SET_USER",payload:data});
+ //Show success message
+             toast.success("Registration successful",{
             duration:5000,
             richColors:true
         })
+        }
+       
      
         
-      }
+      }///End of handle submit
 
+    const getAllUsers = async() => {
+        const response = await fetch("http://localhost:8000/users");
+        const data = await response.json();
 
+        //set user
+        dispatch({type:"SET_USER",payload:data});
+    }
+
+useEffect(() => {
+    //Get all users run this function when the component mounts
+    getAllUsers();
+
+    console.log(state.users)
+},[])
 
   return (
     <div className="container p-5">

@@ -30,18 +30,18 @@ interface UserState{
 
 
 export const useUser =()=>{
+    //We are setting our use reducer with action and state
     const [state,dispatch] = useReducer(userReducer,{users:initialState});
-    console.log(" the current state ",state)
     return {state,dispatch}
 }
 
 const userReducer = (state:UserState,action:UserAction):UserState=>{
-        console.log("action",action.payload)
+       
     switch(action.type){
         case "SET_USER":
             return {
                 //spread to retain old values
-              ...state,
+            
             users:[...state.users,action.payload]//add new user to array
 
             }
