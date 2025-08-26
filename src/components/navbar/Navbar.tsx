@@ -2,12 +2,19 @@
 import React from 'react'
 import { Button } from "@/components/ui/button"
 import { Link, useNavigate } from 'react-router-dom'
+import { loggerUser } from '@/gobal state/userState';
 
 
 const Navbar = () => {
+     //Destructure to to avoid conflict with user reducer
+       const {state:loggetedUser,dispatch:dispatchLoggedUser} = loggerUser();
   const  navigate= useNavigate();
     const logout = () => {
+        //clear local storage
         localStorage.clear();
+        // we calling logout action to clear value of logged user
+        dispatchLoggedUser({type:"LOGOUT",payload:loggetedUser});
+        //redirect to login
         navigate('/');
     }
 

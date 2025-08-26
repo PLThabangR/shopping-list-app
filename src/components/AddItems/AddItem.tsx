@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const AddItem = () => {
     //get logged user
     const {state:LoggedUser} = loggerUser();
-      const [shoppingList, setShoppingList] = useState<Item[]>([]);
+ 
     //form state
     const [name,setName] = useState<string>('');
     const [quantity,setQuantity] = useState<number>(0);
@@ -18,7 +18,7 @@ const AddItem = () => {
 
 const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
 event.preventDefault();
-console.log("this is the logged user ",LoggedUser.email)
+console.log("this is the logged user in the add item ",LoggedUser)
 console.log("shopping list values",name,quantity,notes,category,imageUrl)
 
  //creat new item
@@ -31,9 +31,9 @@ console.log("shopping list values",name,quantity,notes,category,imageUrl)
             imageUrl
         }
         //add new item to state
-        setShoppingList((prev)=>([...prev,newItem]));
+      
 
-        console.log( shoppingList)
+       
 
        const response = await fetch('http://localhost:8000/items', {
         method: 'POST',

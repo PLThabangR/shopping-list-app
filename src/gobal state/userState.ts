@@ -53,17 +53,16 @@ const userReducer = (state:UserState,action:UserAction):UserState=>{
 
 //logged user reducer
 const loggedUserReducer = (state:User,action:UserAction):User=>{
+    //set logged user in local storage
+     localStorage.setItem("loggedUser", JSON.stringify(action.payload));
     switch(action.type){
         case "SET_LoggedUser":
             return {
-                email:action.payload.email,
-                password:action.payload.password,
-                firstName:action.payload.firstName,
-                lastName:action.payload.lastName,
-                cellNumber:action.payload.cellNumber
+                ...action.payload
             }
 
         case "LOGOUT_USER":
+            localStorage.removeItem("loggedUser");
             return {
                 email: "",
                 password: "",
@@ -83,8 +82,13 @@ export const useUser =()=>{
 }
 
 export const loggerUser = ()=>{
-const [state,dispatch] = useReducer(loggedUserReducer,LoggedUser);
-    // console.log("this is the logged user ",state.email)
+const storedUser = localStorage.getItem("loggedUser");
+  const initial:User = storedUser ? JSON.parse(storedUser) : LoggedUser;
+
+
+//We are setting our use reducer with action and state
+const [state,dispatch] = useReducer(loggedUserReducer,initial);
+     console.log("this is the logged user ",state.email)
 //set logged user 
 return {state,dispatch}
 }
