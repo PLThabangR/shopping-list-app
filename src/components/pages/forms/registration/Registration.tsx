@@ -1,5 +1,6 @@
 import { useUser } from "@/gobal state/userState";
 import type { User } from "@/types/User";
+
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -82,15 +83,22 @@ const Registration = () => {
         return
     }//end of if statement 
 
-    // //check if user already exist 
-    //  const existuserResponse:Response = await fetch("http://localhost:8000/users");
-    //     const data = await existuserResponse.json();
+        console.log("User before sending to json server ",user);
+        console.log("current users in state:", state.users.length);
+         console.log("before:", state.users);
 
-    //     //set user 
-    //     dispatch({type:"SET_USER",payload:data});
+         //check if user already exist 
+      const existingUsersData = await fetch('http://localhost:8000/users',{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },});
 
+        const data = await existingUsersData.json();
+
+      console.log("existing users",data);
     //check if user already exists
-    const existingUser = state.users.find((u) => u.email === user.email);
+    const existingUser = data.find((u:User) => u.email === user.email);
     if(existingUser){
         toast.error("User already exists",{
             duration:5000,
@@ -117,7 +125,8 @@ const Registration = () => {
         if(response.ok){
              //Get response and convert to javascript json
              const data = await response.json();
-             //set user
+             console.log("Data from response ",data)
+             //use dispatch to pass our created user to array
  dispatch({type:"SET_USER",payload:data});
  //Show success message
              toast.success("Registration successful",{
@@ -127,15 +136,24 @@ const Registration = () => {
         //navigate user to login
         navigate("/login")
         }//End of if statement
-       
-     
-        
+         
       }///End of handle submit
 
+const getAllData=async()=>{
+    
+       
 
+
+}//end of getAll users
+
+ useEffect(() => {
+    //Get all data
+   getAllData();
+    
+ }, [])
 
   return (
-    <div className="container p-5">
+    <div className="container p-5 w-[60%] m-0 mx-auto">
 
         <h1 className="text-5xl font-extrabold text-[#3C3D42]  m-5 p-2">Create account</h1>
 <form onSubmit={handleSubmit}>

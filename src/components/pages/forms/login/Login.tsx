@@ -3,10 +3,11 @@ import { loggerUser, useUser } from "@/gobal state/userState";
 import { use, useEffect } from "react"
 import { toast } from "sonner";
 import { Link, useNavigate } from 'react-router-dom';
+import type { User } from '@/types/User';
 
 const Login = () => {
     //get users
-    const {state,dispatch} = useUser();
+    const {state:{users},dispatch} = useUser();
 
     //navigate 
     const navigate = useNavigate();
@@ -39,14 +40,28 @@ const Login = () => {
             return
         }
         //     //get users
-         const response = await fetch("http://localhost:8000/users");
-        const data = await response.json();
+        const existingUsersData = await fetch('http://localhost:8000/users',{
+             method: 'GET',
+             headers: {
+               'Content-Type': 'application/json',
+             },});
+       
+               const data = await existingUsersData.json();
+       
+             console.log("existing users",data);
+           //check if user already exists
+           const existingUser = data.find((u:User) => u.email === user.email && u.password === user.password);
+           if(!existingUser){
+               toast.error("Password or email is incorrect",{
+                   duration:5000,
+                   richColors:true
+               })
+               return
+           }   
 
-        //set user
-        // dispatch({type:"SET_USER",payload:data});
+        
 
 
-        const existingUser = data.user.find((u) => u.email === user.email && u.password === user.password);
         if (existingUser) {
             //set logged user
             console.log("This should be logged user",existingUser)
@@ -57,6 +72,12 @@ const Login = () => {
                 duration:5000,
                 richColors:true
             })
+            //set token
+            //Math random is used to generate a random number of ten digits
+            const value = String(Math.floor(Math.random() * 10000000000));
+            
+            localStorage.setItem('token', 'true');
+              localStorage.setItem('value',value);
 
             //redirect to home page
             navigate("/home");
@@ -69,7 +90,11 @@ const Login = () => {
         }
      }
 
- 
+ useEffect(() => {
+     //set token 
+
+     
+ })
 
 
   return (
