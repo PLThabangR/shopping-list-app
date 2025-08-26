@@ -1,10 +1,13 @@
 import type { Item } from '@/types/ShoppingList';
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
 import { toast } from 'sonner';
 import { loggerUser } from '@/gobal state/userState';
 import { Link } from 'react-router-dom';
 
+
 const AddItem = () => {
+  //get items hook
+
     //get logged user
     const {state:LoggedUser} = loggerUser();
  
@@ -55,6 +58,7 @@ console.log("shopping list values",name,quantity,notes,category,imageUrl)
             richColors:true
 
         })
+
 
           //clear form
         setName('');

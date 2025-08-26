@@ -19,20 +19,20 @@
   ],
   "items": [
     {
-      "id": "24dc",
+      "id": "42a0",
       "name": "Watch",
-      "email": "",
-      "quantity": 2,
-      "notes": "Playstation",
+      "email": "khomotso@gmail.com",
+      "quantity": 10,
+      "notes": "Hair Dryer",
       "category": "appliances",
-      "imageUrl": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2F0Y2h8ZW58MHx8MHx8fDA%3D"
+      "imageUrl": "https://images.unsplash.com/photo-1621607510248-9c78bbab941b?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGhhaXIlMjBkcnllcnxlbnwwfHwwfHx8MA%3D%3D"
     },
     {
-      "id": "64b7",
+      "id": "3239",
       "name": "Iphone XR",
-      "email": "",
-      "quantity": 1,
-      "notes": "smart phone",
+      "email": "khomotso@gmail.com",
+      "quantity": 2,
+      "notes": "Phone",
       "category": "appliances",
       "imageUrl": "https://images.unsplash.com/photo-1693480532368-de842fb9dcf4?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YnJlYWQlMjB3aGl0ZSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D"
     }

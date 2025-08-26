@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { Item } from '../types/ShoppingList';
+import type { Item } from '../types/ShoppingList';
 
 
 interface ItemAction{
@@ -25,6 +25,7 @@ const initialState:ItemState = {
 
 //creating our function reducer
 const itemReducer = (state:ItemState,action:ItemAction):ItemState=>{
+    console.log("action from get items ",action)
     switch(action.type){
         case "ADD_ITEM":
             return {
@@ -35,4 +36,11 @@ const itemReducer = (state:ItemState,action:ItemAction):ItemState=>{
         default:
             return state;
     }
+}
+
+export const useItem =()=>{
+    //We are setting our use reducer with action and state
+    const [state,dispatch] = useReducer(itemReducer,initialState);
+    console.log("this is the state array",state)
+    return {state,dispatch}
 }

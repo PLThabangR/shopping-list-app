@@ -1,13 +1,18 @@
+import type { Item } from '@/types/ShoppingList'
 import React from 'react'
 
-const ItemCard = () => {
+interface ItemCardProps {
+ item:Item   
+}
+
+const ItemCard = ({item:Item}) => {
   return (
     <div>
 
 
 <div className="max-w-sm md:max-w-1\4 gap-2 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 mb-5">
     <a href="#">
-        <img className="rounded-t-lg object-cover w-100 h-48 hover:scale-105 transition duration-500" src={"https://images.unsplash.com/photo-1634403665481-74948d815f03?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}  alt="" />
+        <img  src={Item.imageUrl}  className="rounded-t-lg object-cover w-100 h-48 hover:scale-105 transition duration-500" src={"https://images.unsplash.com/photo-1634403665481-74948d815f03?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}  alt="" />
     </a>
     <div className="p-5">
         <a href="#">
