@@ -1,7 +1,7 @@
 import type { Item } from '@/types/ShoppingList';
 import React, { useState } from 'react'
 import { toast } from 'sonner';
-import { loggerUser, useUser } from '@/gobal state/userState';
+import { loggerUser } from '@/gobal state/userState';
 import { Link } from 'react-router-dom';
 
 const AddItem = () => {

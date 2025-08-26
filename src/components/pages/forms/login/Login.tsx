@@ -74,10 +74,14 @@ const Login = () => {
             })
             //set token
             //Math random is used to generate a random number of ten digits
-            const value = String(Math.floor(Math.random() * 10000000000));
+           // const value = String(Math.floor(Math.random() * 10000000000));
+            const token =true
+            const secret =String(Math.floor(Math.random() * 10000000000));
             
-            localStorage.setItem('token', 'true');
-              localStorage.setItem('value',value);
+             //Store token object in local storage 
+            localStorage.setItem('token', JSON.stringify(token));
+            localStorage.setItem('value', JSON.stringify(secret));
+            
 
             //redirect to home page
             navigate("/home");
@@ -90,6 +94,9 @@ const Login = () => {
         }
      }
 
+     //set token function to expire after 10 minutes
+     
+
  useEffect(() => {
      //set token 
 
@@ -99,7 +106,7 @@ const Login = () => {
 
   return (
     <div>
-             <div className="container p-5">
+             <div className="container p-5  w-[60%] m-0 mx-auto">
 
         <h1 className="text-5xl font-extrabold text-[#3C3D42]  m-5 p-2">Login to your account</h1>
 <form onSubmit={handleSubmit}>

@@ -137,7 +137,7 @@ const Registration = () => {
             richColors:true
         })
         //navigate user to login
-        navigate("/login")
+        navigate("/")
         }//End of if statement
          
       }///End of handle submit
@@ -193,7 +193,7 @@ const getAllData=async()=>{
         <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" className="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
     </div>
     <button type="submit" className="text-white bg-[#C07858] hover:bg-[#cc927a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign up</button>
-      <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Already have account <Link to="/login" className="text-blue-600 hover:underline dark:text-blue-500">Login</Link></label>
+      <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Already have account <Link to="/" className="text-blue-600 hover:underline dark:text-blue-500">Login</Link></label>
 </form>
 
       
