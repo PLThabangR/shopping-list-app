@@ -56,6 +56,9 @@ const Registration = () => {
             return
          }// End of if statement
 
+         //encrypt pass with bcrypt
+         c
+
           //Check if email is valid using regular expression
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(user.email)) {

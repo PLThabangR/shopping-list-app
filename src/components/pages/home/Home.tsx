@@ -1,13 +1,10 @@
-
-import Login from '../forms/login/Login'
-import Registration from '../forms/registration/Registration'
+import Navbar from "@/components/navbar/Navbar"
 
 const Home = () => {
   return (
     <div>
-      <Login/>
      
-
+    <Navbar/>
     </div>
   )
 }
