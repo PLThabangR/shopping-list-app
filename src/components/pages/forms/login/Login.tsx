@@ -1,0 +1,117 @@
+import React, { useState } from 'react'
+import { loggerUser, useUser } from "@/gobal state/userState";
+import { use, useEffect } from "react"
+import { toast } from "sonner";
+import { Link, useNavigate } from 'react-router-dom';
+
+const Login = () => {
+    //get users
+    const {state,dispatch} = useUser();
+
+    //navigate 
+    const navigate = useNavigate();
+
+    //get logged user 
+    //Destructure to to avoid conflict with user reducer
+    const {dispatch:dispatchLoggedUser} = loggerUser();
+    const [user, setUser] = useState({
+        email: '',
+        password: '' })
+
+
+     const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        //validation email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(user.email)) {
+            toast.error("Please enter a valid email address",{
+            duration:5000,
+            richColors:true
+        })
+        return
+        }
+        if (user.password.length < 5) {
+           toast.error("Password must be at least 5 characters",{
+                duration:5000,
+                richColors:true
+            })
+            return
+        }
+        //     //get users
+         const response = await fetch("http://localhost:8000/users");
+        const data = await response.json();
+
+        //set user
+        // dispatch({type:"SET_USER",payload:data});
+
+
+        const existingUser = data.user.find((u) => u.email === user.email && u.password === user.password);
+        if (existingUser) {
+            //set logged user
+            console.log("This should be logged user",existingUser)
+            //Store logged user in the logged user reducer
+            dispatchLoggedUser({type:"SET_LoggedUser",payload:existingUser})
+            
+            toast.success("Login successful",{
+                duration:5000,
+                richColors:true
+            })
+
+            //redirect to home page
+            navigate("/home");
+            
+        } else {
+           toast.error("Invalid email or password",{
+            duration:5000,
+            richColors:true
+           })
+        }
+     }
+
+ 
+
+
+  return (
+    <div>
+             <div className="container p-5">
+
+        <h1 className="text-5xl font-extrabold text-[#3C3D42]  m-5 p-2">Login to your account</h1>
+<form onSubmit={handleSubmit}>
+    <div className="grid gap-6 mb-6 md:grid-cols-2">
+        
+
+        
+        
+    </div>
+    <div className="mb-6">
+        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>
+        <input type="email" id="email" value={user.email} onChange={(e) => setUser({...user, email: e.target.value})} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required />
+    </div> 
+    <div className="mb-6">
+        <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+        <input type="password" id="password" value={user.password} onChange={(e) => setUser({...user, password: e.target.value})} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />
+    </div> 
+
+  
+    <button type="submit" className="text-white bg-[#C07858] hover:bg-[#cc927a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign in</button>
+      <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Do not have account <Link to="/register" className="text-blue-600 hover:underline dark:text-blue-500">Register</Link></label>
+</form>
+
+      
+
+
+
+    </div>
+
+
+
+
+
+
+
+    </div>
+  )
+}
+
+export default Login

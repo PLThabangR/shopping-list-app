@@ -1,12 +1,16 @@
 import { useUser } from "@/gobal state/userState";
 import type { User } from "@/types/User";
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 
 
 
 const Registration = () => {
+    //use navigate hook
+    const navigate = useNavigate();
+
    //Form state
     const [user, setUser] = useState<User>({
         firstName: '',
@@ -22,14 +26,14 @@ const Registration = () => {
         //Checkbox state
     const [checkBox,setCheckBox] = useState(false);
 
-    //user reducer
+    //user reducer to get list of users
     const {state,dispatch} = useUser();
     const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        
+        //Check if checkbox is checked
         if(!checkBox){
+            //If not checked show error
             toast.error("Please accept the terms",{
-             
                duration:5000,
                richColors:true,
                action:{
@@ -42,6 +46,7 @@ const Registration = () => {
             return
         }//End of if statement
          //validation goes here
+         //Check if password is at least 5 characters
          if(user.password.length < 5){
             toast.error("Password must be at least 5 characters",{
                 duration:5000,
@@ -61,7 +66,7 @@ const Registration = () => {
     }//End of if statement
 
     //Check if phone number is valid
-    if(user.cellNumber.toString().length !== 10){
+    if(user.cellNumber.toString().length+1 < 10){
         toast.error("Please enter a valid phone number",{
             duration:5000,
             richColors:true
@@ -77,6 +82,13 @@ const Registration = () => {
         return
     }//end of if statement 
 
+    // //check if user already exist 
+    //  const existuserResponse:Response = await fetch("http://localhost:8000/users");
+    //     const data = await existuserResponse.json();
+
+    //     //set user 
+    //     dispatch({type:"SET_USER",payload:data});
+
     //check if user already exists
     const existingUser = state.users.find((u) => u.email === user.email);
     if(existingUser){
@@ -86,10 +98,9 @@ const Registration = () => {
         })
         return
     }   
-
     //User before sending to json server
    
-        const response = await fetch("http://localhost:8000/users",{
+    const response = await fetch("http://localhost:8000/users",{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(user) //Convert user object javascript string 
@@ -113,26 +124,15 @@ const Registration = () => {
             duration:5000,
             richColors:true
         })
-        }
+        //navigate user to login
+        navigate("/login")
+        }//End of if statement
        
      
         
       }///End of handle submit
 
-    const getAllUsers = async() => {
-        const response = await fetch("http://localhost:8000/users");
-        const data = await response.json();
 
-        //set user
-        dispatch({type:"SET_USER",payload:data});
-    }
-
-useEffect(() => {
-    //Get all users run this function when the component mounts
-    getAllUsers();
-
-    console.log(state.users)
-},[])
 
   return (
     <div className="container p-5">
@@ -162,8 +162,8 @@ useEffect(() => {
     </div> 
 
     <div className="mb-6">
-        <label htmlFor="cellphone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-        <input type="number" id="cellphone" value={user.cellNumber} onChange={(e) => setUser({...user, cellNumber: e.target.value})} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="082 1234 1234" required />
+        <label htmlFor="cellphone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cell number</label>
+        <input type="number" id="cellphone" value={user.cellNumber} onChange={(e) => setUser({...user, cellNumber:Number( e.target.value)})} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="082 1234 1234" required />
     </div> 
     <div className="flex items-start mb-6">
         <div className="flex items-center h-5">
@@ -171,7 +171,8 @@ useEffect(() => {
         </div>
         <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" className="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
     </div>
-    <button type="submit" className="text-white bg-[#C07858] hover:bg-[#cc927a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    <button type="submit" className="text-white bg-[#C07858] hover:bg-[#cc927a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign up</button>
+      <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Already have account <Link to="/login" className="text-blue-600 hover:underline dark:text-blue-500">Login</Link></label>
 </form>
 
       

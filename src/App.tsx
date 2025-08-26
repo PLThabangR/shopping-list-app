@@ -7,16 +7,27 @@ import Home from './components/pages/home/Home'
 //import sonner toast
 import { Toaster } from "@/components/ui/sonner";
 
+import {BrowserRouter, Routes, Route} from "react-router-dom"
+import Registration from './components/pages/forms/registration/Registration';
+import Login from './components/pages/forms/login/Login';
+
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-         <div className="flex min-h-svh flex-col items-center justify-center">
-        <Home/>
 
-           <Toaster position='top-center'/>
-    </div>
+      
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Registration/>} />
+           <Route path="/login" element={<Login/>} />
+        </Routes>
+
+      </BrowserRouter>
+
+      <Toaster  position="top-center"/>
 
     </>
   )

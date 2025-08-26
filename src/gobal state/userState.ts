@@ -1,5 +1,5 @@
 import type { User } from "@/types/User";
-import { useReducer } from "react";
+import { useReducer } from 'react';
 
 
 
@@ -14,38 +14,82 @@ interface UserAction{
     }
 }
 
-
-//initial state
-const initialState : User[] = [
-   { email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    cellNumber:0}
-]
-
 interface UserState{
     users:User[] //array will store users
 }
 
-
-export const useUser =()=>{
-    //We are setting our use reducer with action and state
-    const [state,dispatch] = useReducer(userReducer,{users:initialState});
-    return {state,dispatch}
+//initial state
+const initialState : UserState= {
+users: [ 
+     { email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    cellNumber:0},
+],
 }
 
+
+
+//logget user
+const LoggedUser : User = {
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    cellNumber:0
+}
+//reducers
 const userReducer = (state:UserState,action:UserAction):UserState=>{
-       
+       console.log("this is the payload ",action.payload)
     switch(action.type){
         case "SET_USER":
             return {
-                //spread to retain old values
-            
+                //spread to retain old values            
             users:[...state.users,action.payload]//add new user to array
-
+              
             }
         default:
             return state;
     }
 }
+
+//logged user reducer
+const loggedUserReducer = (state:User,action:UserAction):User=>{
+    switch(action.type){
+        case "SET_LoggedUser":
+            return {
+                email:action.payload.email,
+                password:action.payload.password,
+                firstName:action.payload.firstName,
+                lastName:action.payload.lastName,
+                cellNumber:action.payload.cellNumber
+            }
+
+        case "LOGOUT_USER":
+            return {
+                email: "",
+                password: "",
+                firstName: "",
+                lastName: "",
+                cellNumber:0
+            }
+        default:
+            return state;
+    }
+}
+export const useUser =()=>{
+    //We are setting our use reducer with action and state
+    const [state,dispatch] = useReducer(userReducer,initialState);
+     console.log("this is the list of users ",state.users)
+    return {state,dispatch}
+}
+
+export const loggerUser = ()=>{
+const [state,dispatch] = useReducer(loggedUserReducer,LoggedUser);
+     console.log("this is the logged user ",state.email)
+//set logged user 
+return {state,dispatch}
+}
+
+
