@@ -1,12 +1,12 @@
 import type { Item } from '@/types/ShoppingList';
 import React, { useState } from 'react'
 import { toast } from 'sonner';
-import { useUser } from '@/gobal state/userState';
+import { loggerUser, useUser } from '@/gobal state/userState';
 import { Link } from 'react-router-dom';
 
 const AddItem = () => {
     //get logged user
-    const {state:LoggedUser} = useUser();
+    const {state:LoggedUser} = loggerUser();
       const [shoppingList, setShoppingList] = useState<Item[]>([]);
     //form state
     const [name,setName] = useState<string>('');
@@ -24,7 +24,7 @@ console.log("shopping list values",name,quantity,notes,category,imageUrl)
  //creat new item
         const newItem:Item = {
             name,
-            email:!LoggedUser.email? LoggedUser.email:"",
+            email:LoggedUser.email,
             quantity,
             notes,
             category,
