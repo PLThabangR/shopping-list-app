@@ -12,6 +12,8 @@ import Registration from './components/pages/forms/registration/Registration';
 import Login from './components/pages/forms/login/Login';
 import LandingPage from './components/pages/landingPage/LandingPage';
 import Protected from './components/pages/protectedPages/Protected';
+import Profile from './components/pages/Profile/Profile';
+import AddItem from './components/AddItems/AddItem';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,7 +30,8 @@ function App() {
            <Route path="/landing" element={<LandingPage/>} />
 
            <Route path="/home" element={<Protected><Home /></Protected>} />
-           <Route path="/" element={<Protected><Home /></Protected>} />
+           <Route path="/profile" element={<Protected><Profile /></Protected>} />
+           <Route path="/add-item" element={<Protected><AddItem /></Protected>} />
         </Routes>
 
       </BrowserRouter>
