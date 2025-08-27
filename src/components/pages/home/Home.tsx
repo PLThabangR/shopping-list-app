@@ -23,6 +23,8 @@ const dispatch = useDispatch();
 const items = useSelector((state:RootState) => state.items.items);
 
    const getAllItems =async () =>{
+    
+
       setLoading(true);
 
     const response = await fetch('http://localhost:8000/items',{
@@ -47,14 +49,14 @@ const items = useSelector((state:RootState) => state.items.items);
         // })
         setLoading(false);
          const data = await response.json();
-         console.log("data from json server ",data)
+     
         //filter items by logged user
       const  loggedUserItems=data.filter((item:Item) => item.email === loggedUser.email);
-           console.log("data from after filter ",loggedUserItems)
+         
         //Ad logged user items to items array
         //add items as singular not array
          for (let i = 0; i < loggedUserItems.length; i++) {
-          console.log("logged user items for loop",loggedUserItems[i])
+        
         dispatch(addItems(loggedUserItems[i]));//add items to items array
        }//end of for
        
@@ -67,7 +69,11 @@ const items = useSelector((state:RootState) => state.items.items);
 
 
    useEffect(()=>{
-getAllItems();
+    //run only once when its mounted
+if (items.length === 0) {
+      getAllItems();
+      console.log("This wil run only once");
+    }
 
 
    },[])

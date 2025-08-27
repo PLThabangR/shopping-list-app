@@ -40,7 +40,7 @@ name: "items",
     },//end of delete
     //clear state 
     clearItems: (state) => {
-      state.items = [];  // 👈 clear list on logout
+      state.items = [];  
     },
 
 
@@ -51,5 +51,5 @@ name: "items",
 
 
   //exporting the slice
-  export const { addItems,updateItems,deleteItem,clearItemss } = itemSlice.actions;
+  export const { addItems,updateItems,deleteItem,clearItems } = itemSlice.actions;
   export default itemSlice.reducer

@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from '@/components/redux-toolkit/app/features/authSlice';
 import type { RootState } from "@/components/redux-toolkit/app/store";
-import { clearItemss } from '../redux-toolkit/app/features/itemSlice';
+import { clearItems } from '../redux-toolkit/app/features/itemSlice';
 
 
 const Navbar = () => {
@@ -26,7 +26,7 @@ const dispatch = useDispatch();
        //clear user state on logout
         dispatch(logout());
         //clear products state on logout
-        dispatch(clearItemss())
+        dispatch(clearItems())
         //redirect to login
         navigate('/');
     }
