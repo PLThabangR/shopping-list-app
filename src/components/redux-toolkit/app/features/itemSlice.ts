@@ -25,17 +25,17 @@ name: "items",
     updateItem:(state,action:PayloadAction<Item>)=>{
         const updatedItem = action.payload;//get the updated item
 
-        const itemToUpdate = state.items.find((item) => item.email === updatedItem.email);
+        const itemToUpdate = state.items.find((item) => item.id === updatedItem.id);
         //if item exist update it
         if (itemToUpdate) {
-            state.items = state.items.map((item) => (item.email === updatedItem.email ? updatedItem : item));
+            state.items = state.items.map((item) => (item.id === updatedItem.id ? updatedItem : item));
         }
         
     },//end of update
 
-    deleteItem:(state,action:{payload:{email:string}})=>{
-        const email = action.payload.email;
-        state.items = state.items.filter((item) => item.email !== email);
+    deleteItem:(state,action:PayloadAction<Item>)=>{
+        const id = action.payload.id;//get the item id
+        state.items = state.items.filter((item) => item.id !== id);
         
     },//end of delete
     //clear state 

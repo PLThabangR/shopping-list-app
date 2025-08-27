@@ -52,20 +52,20 @@ const items = useSelector((state:RootState) => state.items.items);
      
         //filter items by logged user
       const  loggedUserItems=data.filter((item:Item) => item.email === loggedUser.email);
-         
+         console.log("logged user items",loggedUserItems);
         //Ad logged user items to items array
         //add items as singular not array
          for (let i = 0; i < loggedUserItems.length; i++) {
         
         dispatch(addItems(loggedUserItems[i]));//add items to items array
        }//end of for
-       
+     
 
  }//end of if
    }//end of get all items fumnction
 
    //Display items on card 
-   const DisplayItems = items.map((item:Item) => <ItemCard key={Math.floor(Math.random() * 1000)} email={item.email} category={item.category} name={item.name} quantity={item.quantity} notes={item.notes} imageUrl={item.imageUrl}  />)
+   const DisplayItems = items.map((item:Item) => <ItemCard key={item.id} id={item.id} email={item.email} category={item.category} name={item.name} quantity={item.quantity} notes={item.notes} imageUrl={item.imageUrl}  />)
 
 
    useEffect(()=>{
@@ -74,6 +74,7 @@ if (items.length === 0) {
       getAllItems();
       console.log("This wil run only once");
     }
+
 
 
    },[])

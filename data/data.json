@@ -27,15 +27,6 @@
   ],
   "items": [
     {
-      "id": "84ba",
-      "name": "Iphone XR",
-      "email": "khomotso@gmail.com",
-      "quantity": 1,
-      "notes": "Phone",
-      "category": "appliances",
-      "imageUrl": "https://images.unsplash.com/photo-1621607510248-9c78bbab941b?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGhhaXIlMjBkcnllcnxlbnwwfHwwfHx8MA%3D%3D"
-    },
-    {
       "id": "0fe3",
       "name": "take away",
       "email": "johndoe@gmail.com",
@@ -43,15 +34,6 @@
       "notes": "meal",
       "category": "fast food",
       "imageUrl": "https://images.unsplash.com/photo-1513639776629-7b61b0ac49cb?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a2ZjfGVufDB8fDB8fHww"
-    },
-    {
-      "id": "40c5",
-      "name": "Watch",
-      "email": "khomotso@gmail.com",
-      "quantity": 2,
-      "notes": "Playstation",
-      "category": "beverage",
-      "imageUrl": "https://images.unsplash.com/photo-1621607510248-9c78bbab941b?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGhhaXIlMjBkcnllcnxlbnwwfHwwfHx8MA%3D%3D"
     },
     {
       "id": "4b04",
