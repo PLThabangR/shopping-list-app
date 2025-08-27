@@ -22,10 +22,11 @@ export const authSlice = createSlice({
     // Reducers are like instructions of what to do with the each slice of the cake
     //they define how the information in a particular slice is updated/changed
     reducers: {
-        login: (state, action) => {
+        login: (state, action: { payload: User }) => {
             state.user = action.payload;
         },
         logout: (state) => {
+            //clear state on logout
             state.user = user;
         },
     },

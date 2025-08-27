@@ -2,18 +2,28 @@
 import React from 'react'
 import { Button } from "@/components/ui/button"
 import { Link, useNavigate } from 'react-router-dom'
-import { loggerUser } from '@/gobal state/userState';
+// import { loggerUser } from '@/gobal state/userState';
+
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from '@/components/redux-toolkit/app/features/authSlice';
+import type { RootState } from "@/components/redux-toolkit/app/store";
 
 
 const Navbar = () => {
      //Destructure to to avoid conflict with user reducer
-       const {state:loggetedUser,dispatch:dispatchLoggedUser} = loggerUser();
+       //const {state:loggetedUser,dispatch:dispatchLoggedUser} = loggerUser();
+
+     // const loggedUser = useSelector((state:RootState) => state.auth.user)
+const dispatch = useDispatch();
   const  navigate= useNavigate();
-    const logout = () => {
+    const logoutUser = () => {
         //clear local storage
         localStorage.clear();
         // we calling logout action to clear value of logged user
-        dispatchLoggedUser({type:"LOGOUT",payload:loggetedUser});
+       // dispatchLoggedUser({type:"LOGOUT",payload:loggetedUser});
+      
+       //clear state on logout
+        dispatch(logout());
         //redirect to login
         navigate('/');
     }
@@ -28,7 +38,7 @@ const Navbar = () => {
             <Link to="/profile">  <Button variant="destructive"  className='bg-[#FEF9EF] border-1 border-[#C07858] font-bold m-1 shrink-0 text-[#C07858] hover:scale-110 hover:text-[#ede7e5]  hover:bg-[#3C3D42]'>Profile</Button>  </Link>
             <Link to="/add-item">  <Button variant="destructive"  className='bg-[#FEF9EF] border-1 border-[#C07858] font-bold m-1 shrink-0 text-[#C07858] hover:scale-110 hover:text-[#ede7e5]  hover:bg-[#3C3D42]'>Add item</Button></Link>
 
-             <Button variant="destructive" onClick={logout}  className='bg-[#C07858] font-bold  m-1 shrink-0  text-white hover:scale-110 hover:text-[#ede7e5]  hover:bg-[#3C3D42]'>Logout</Button>
+             <Button variant="destructive" onClick={logoutUser}  className='bg-[#C07858] font-bold  m-1 shrink-0  text-white hover:scale-110 hover:text-[#ede7e5]  hover:bg-[#3C3D42]'>Logout</Button>
     
         </div>
 

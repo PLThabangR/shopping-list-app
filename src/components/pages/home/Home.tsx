@@ -1,15 +1,23 @@
+
+//import { useItem } from "@/gobal state/itemState";
+//import { loggerUser } from "@/gobal state/userState";
 import ItemCard from "@/components/ItemsCard/ItemCard"
 import Navbar from "@/components/navbar/Navbar"
-import { useItem } from "@/gobal state/itemState";
-
-import { loggerUser } from "@/gobal state/userState";
 import type { Item } from "@/types/ShoppingList";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "@/components/redux-toolkit/app/store";
+
 const Home = () => {
-   const {state:loggedUser} = loggerUser();
-const {state:items,dispatch:dispatchItems} = useItem();           
+   //const {state:loggedUser} = loggerUser();
+//const {state:items,dispatch:dispatchItems} = useItem();
+
+//get logged user
+const loggedUser = useSelector((state:RootState) => state.auth.user)
+const dispatch = useDispatch();
+
    const getAllItems =async () =>{
 
     const response = await fetch('http://localhost:8000/items',{
@@ -37,7 +45,7 @@ const {state:items,dispatch:dispatchItems} = useItem();
       const  loggedUserItem=data.filter((item:Item) => item.email === loggedUser.email);
 
          //set items in the state
-          dispatchItems({type:"SET_ITEMS",payload:loggedUserItem})
+        //  dispatchItems({type:"SET_ITEMS",payload:loggedUserItem})
 
        }
       

@@ -1,30 +1,33 @@
 import React, { useState } from 'react'
-import { loggerUser, useUser } from "@/gobal state/userState";
+//import { loggerUser, useUser } from "@/gobal state/userState";
 import { useEffect } from "react"
 import { toast } from "sonner";
 import { Link, useNavigate } from 'react-router-dom';
 import type { User } from '@/types/User';
 
-//
+// hooks from react redux
 import { useSelector, useDispatch } from 'react-redux';
 //import auth reducer from auth slice
-import {login,logout} from '@/components/redux-toolkit/app/features/authSlice'
-import authSlice from '../../../redux-toolkit/app/features/authSlice';
-import type { Root } from 'react-dom/client';
+import {login} from '@/components/redux-toolkit/app/features/authSlice'
+import type { RootState } from '@/components/redux-toolkit/app/store';
+
 const Login = () => {
     //get users
-    const {state:{users},dispatch} = useUser();
+    //const {state:{users},dispatch} = useUser();
     //use selector allows us to get the state from the store
+    //Use rootState to help type script understand the type of store
+  
+  
     const authUser = useSelector((state:RootState) => state.auth.user)
     //use dispatch allows us to dispatch actions /to change state
-
-
+const dispatch = useDispatch();
+        console.log("This is the user from redux",authUser)
     //navigate 
     const navigate = useNavigate();
 
     //get logged user 
     //Destructure to to avoid conflict with user reducer
-    const {dispatch:dispatchLoggedUser} = loggerUser();
+    // const {dispatch:dispatchLoggedUser} = loggerUser();
     const [user, setUser] = useState({
         email: '',
         password: '' })
@@ -74,10 +77,11 @@ const Login = () => {
 
         if (existingUser) {
             //set logged user
-            console.log("This should be logged user",existingUser)
+
             //Store logged user in the logged user reducer
-            dispatchLoggedUser({type:"SET_LoggedUser",payload:existingUser})
-            
+           // dispatchLoggedUser({type:"SET_LoggedUser",payload:existingUser})
+            //add user to the store
+            dispatch(login(existingUser));
             toast.success("Login successful",{
                 duration:5000,
                 richColors:true
@@ -105,13 +109,6 @@ const Login = () => {
      }
 
      //set token function to expire after 10 minutes
-     
-
- useEffect(() => {
-     //set token 
-
-     
- })
 
 
   return (
