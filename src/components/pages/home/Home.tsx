@@ -14,22 +14,60 @@ import { addItems } from "@/components/redux-toolkit/app/features/itemSlice";
 const Home = () => {
    //const {state:loggedUser} = loggerUser();
 //const {state:items,dispatch:dispatchItems} = useItem();
-
+const [loading,setLoading] = useState(false);
 
 //get logged user
 const loggedUser = useSelector((state:RootState) => state.auth.user)
-// const dispatch = useDispatch();
+const dispatch = useDispatch();
 
 const items = useSelector((state:RootState) => state.items.items);
 
- 
+   const getAllItems =async () =>{
+      setLoading(true);
+
+    const response = await fetch('http://localhost:8000/items',{
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+
+       }) 
+       if(!response.ok){
+        toast.error("Error fetching items",{
+            duration:5000,
+            richColors:true
+        })
+        return
+       }
+
+       if(response.ok){
+        // toast.success("Items fetched successfully",{
+        //     duration:5000,
+        //     richColors:true
+        // })
+        setLoading(false);
+         const data = await response.json();
+         console.log("data from json server ",data)
+        //filter items by logged user
+      const  loggedUserItems=data.filter((item:Item) => item.email === loggedUser.email);
+           console.log("data from after filter ",loggedUserItems)
+        //Ad logged user items to items array
+        //add items as singular not array
+         for (let i = 0; i < loggedUserItems.length; i++) {
+          console.log("logged user items for loop",loggedUserItems[i])
+        dispatch(addItems(loggedUserItems[i]));//add items to items array
+       }//end of for
+       
+
+ }//end of if
+   }//end of get all items fumnction
 
    //Display items on card 
    const DisplayItems = items.map((item:Item) => <ItemCard key={item.email} email={item.email} category={item.category} name={item.name} quantity={item.quantity} notes={item.notes} imageUrl={item.imageUrl}  />)
 
 
    useEffect(()=>{
-
+getAllItems();
 
 
    },[])
@@ -45,7 +83,7 @@ const items = useSelector((state:RootState) => state.items.items);
           
         <div className="flex flex-col justify-center items-center  md:flex-row md:justify-evenly md:flex-wrap gap-1 ">
 
-            {items.length < 0 ? <h1 className="text-2xl shrink-0 font-extrabold text-[#3C3D42] md:text-5xl text-center  m-2 p-2">No items found</h1> : DisplayItems}
+            {items.length > 0 ?DisplayItems: <h1 className="text-2xl shrink-0 font-extrabold text-[#3C3D42] md:text-5xl text-center  m-2 p-2">No items found</h1> }
           
         </div>
     </div>

@@ -1,24 +1,22 @@
 import React, { useState } from 'react'
 //import { loggerUser, useUser } from "@/gobal state/userState";
-import { useEffect } from "react"
+
 import { toast } from "sonner";
 import { Link, useNavigate } from 'react-router-dom';
 import type { User } from '@/types/User';
 
 // hooks from react redux
-import { useSelector, useDispatch } from 'react-redux';
+import {  useDispatch } from 'react-redux';
 //import auth reducer from auth slice
 import {login} from '@/components/redux-toolkit/app/features/authSlice'
-import type { RootState } from '@/components/redux-toolkit/app/store';
+
 import { Button } from '@/components/ui/button';
-import { addItems } from "@/components/redux-toolkit/app/features/itemSlice";
+
 
 const Login = () => {
     
     //use selector allows us to get the state from the store
-    //Use rootState to help type script understand the type of store
-  
-    const authUser = useSelector((state:RootState) => state.auth.user)
+ 
     //use dispatch allows us to dispatch actions /to change state
 const dispatch = useDispatch();
        
@@ -28,7 +26,7 @@ const dispatch = useDispatch();
     
 
 
-const [loading,setLoading] = useState(false);
+
     //get logged user 
     //Destructure to to avoid conflict with user reducer
     // const {dispatch:dispatchLoggedUser} = loggerUser();
@@ -97,12 +95,12 @@ const [loading,setLoading] = useState(false);
             localStorage.setItem('token', JSON.stringify(token));
             localStorage.setItem('value', JSON.stringify(secret));
             
+            //load the get user function
 
             //redirect to home page
             navigate("/home");
 
-            //load the get user function
-            getAllItems()
+            
             
         } else {
            toast.error("Invalid email or password",{
@@ -111,46 +109,7 @@ const [loading,setLoading] = useState(false);
            })
         }
      }//End of handle submit
-//set token function to expire after 10 minutes
-  const getAllItems =async () =>{
-      setLoading(true);
-
-    const response = await fetch('http://localhost:8000/items',{
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-
-       }) 
-       if(!response.ok){
-        toast.error("Error fetching items",{
-            duration:5000,
-            richColors:true
-        })
-        return
-       }
-
-       if(response.ok){
-        // toast.success("Items fetched successfully",{
-        //     duration:5000,
-        //     richColors:true
-        // })
-        setLoading(false);
-         const data = await response.json();
-         console.log("data from json server ",data)
-        //filter items by logged user
-      const  loggedUserItems=data.filter((item:Item) => item.email === loggedUser.email);
-           console.log("data from after filter ",loggedUserItems)
-        //Ad logged user items to items array
-        //add items as singular not array
-         for (let i = 0; i < loggedUserItems.length; i++) {
-          console.log("logged user items for loop",loggedUserItems[i])
-        dispatch(addItems(loggedUserItems[i]));//add items to items array
-       }//end of for
-       
-
- }//end of if
-   }//end of get all items fumnction
+//set token function to expire after 10 minutesd of get all items fumnction
 
 
 

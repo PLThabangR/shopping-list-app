@@ -37,7 +37,11 @@ name: "items",
         const email = action.payload.email;
         state.items = state.items.filter((item) => item.email !== email);
         
-    }//end of delete
+    },//end of delete
+    //clear state 
+    clearItems: (state) => {
+      state.items = [];  // 👈 clear list on logout
+    },
 
 
 }//end of reducers
@@ -47,5 +51,5 @@ name: "items",
 
 
   //exporting the slice
-  export const { addItems,updateItems,deleteItems } = itemSlice.actions;
+  export const { addItems,updateItems,deleteItem,clearItemss } = itemSlice.actions;
   export default itemSlice.reducer
