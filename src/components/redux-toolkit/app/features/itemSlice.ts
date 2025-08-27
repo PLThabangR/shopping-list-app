@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Item } from '../../../../types/ShoppingList';
 
 
@@ -18,11 +18,15 @@ export const itemSlice =  createSlice({
 name: "items",
     initialState,
     reducers: {
-    addItems: (state, action: { payload: Item }) => {
+        //My add reducer with type Item as payload
+    addItems: (state, action:PayloadAction<Item>) => {
+        //Update the array by using push method
+        if(Array.isArray(action.payload)) state.items.push(...action.payload);
         state.items.push(action.payload);
     },
-    updateItems:(state,action:{payload:{updatedItem:Item}})=>{
-        const updatedItem = action.payload.updatedItem;
+    updateItems:(state,action:PayloadAction<Item>)=>{
+        const updatedItem = action.payload;//get the updated item
+
         const itemToUpdate = state.items.find((item) => item.email === updatedItem.email);
         //if item exist update it
         if (itemToUpdate) {

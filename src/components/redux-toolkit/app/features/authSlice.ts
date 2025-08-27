@@ -18,11 +18,14 @@ const user: User = { //initial user of type User
 export const authSlice = createSlice({
     name: "authentication",
     initialState,   //initial state imagine as use state
-        
+    
     // Reducers are like instructions of what to do with the each slice of the cake
     //they define how the information in a particular slice is updated/changed
     reducers: {
         login: (state, action: { payload: User }) => {
+            console.log("action from login ",action)
+            //set logged user in local storage
+     localStorage.setItem("email", JSON.stringify(action.payload.email));
             state.user = action.payload;
         },
         logout: (state) => {
