@@ -1,15 +1,20 @@
 import type { Item } from '@/types/ShoppingList';
 import React, {  useState } from 'react'
 import { toast } from 'sonner';
-import { loggerUser } from '@/gobal state/userState';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Link } from 'react-router-dom';
+import type { RootState } from '../redux-toolkit/app/store';
 
 
 const AddItem = () => {
   //get items hook
-
+   const LoggedUser = useSelector((state:RootState) => state.auth.user)
+  const items = useSelector((state:RootState) => state.items.items)
     //get logged user
-    const {state:LoggedUser} = loggerUser();
+
+  const dispatch = useDispatch()
+    //const {state:LoggedUser} = loggerUser();
  
     //form state
     const [name,setName] = useState<string>('');
@@ -21,8 +26,7 @@ const AddItem = () => {
 
 const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
 event.preventDefault();
-console.log("this is the logged user in the add item ",LoggedUser)
-console.log("shopping list values",name,quantity,notes,category,imageUrl)
+
 
  //creat new item
         const newItem:Item = {

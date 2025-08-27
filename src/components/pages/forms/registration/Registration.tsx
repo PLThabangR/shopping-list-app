@@ -1,4 +1,5 @@
-import { useUser } from "@/gobal state/userState";
+//import { useUser } from "@/gobal state/userState";
+import { Button } from "@/components/ui/button";
 import type { User } from "@/types/User";
 
 import { useEffect, useState } from "react"
@@ -28,7 +29,7 @@ const Registration = () => {
     const [checkBox,setCheckBox] = useState(false);
 
     //user reducer to get list of users
-    const {state,dispatch} = useUser();
+    //const {state,dispatch} = useUser();
     const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         //Check if checkbox is checked
@@ -97,7 +98,6 @@ const Registration = () => {
 
         const data = await existingUsersData.json();
 
-      console.log("existing users",data);
     //check if user already exists
     const existingUser = data.find((u:User) => u.email === user.email);
     if(existingUser){
@@ -183,7 +183,7 @@ const Registration = () => {
         </div>
         <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" className="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
     </div>
-    <button type="submit" className="text-white bg-[#C07858] hover:bg-[#cc927a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign up</button>
+     <Button variant="destructive" type="submit"  className='bg-[#C07858] font-bold  m-1 shrink-0  text-white hover:scale-110 hover:text-[#ede7e5]  hover:bg-[#3C3D42]'>Sign in</Button>
       <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Already have account <Link to="/" className="text-blue-600 hover:underline dark:text-blue-500">Login</Link></label>
 </form>
 

@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 //import auth reducer from auth slice
 import {login} from '@/components/redux-toolkit/app/features/authSlice'
 import type { RootState } from '@/components/redux-toolkit/app/store';
+import { Button } from '@/components/ui/button';
 
 const Login = () => {
     //get users
@@ -132,8 +133,8 @@ const dispatch = useDispatch();
         <input type="password" id="password" value={user.password} onChange={(e) => setUser({...user, password: e.target.value})} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />
     </div> 
 
-  
-    <button type="submit" className="text-white bg-[#C07858] hover:bg-[#cc927a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
+   <Button variant="destructive" type='submit'   className='bg-[#C07858] font-bold  m-1 shrink-0  text-white hover:scale-110 hover:text-[#ede7e5]  hover:bg-[#3C3D42]'>Login</Button>
+
       <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Do not have account <Link to="/register" className="text-blue-600 hover:underline dark:text-blue-500">Register</Link></label>
 </form>
 

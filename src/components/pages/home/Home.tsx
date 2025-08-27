@@ -4,7 +4,7 @@
 import ItemCard from "@/components/ItemsCard/ItemCard"
 import Navbar from "@/components/navbar/Navbar"
 import type { Item } from "@/types/ShoppingList";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +13,7 @@ import type { RootState } from "@/components/redux-toolkit/app/store";
 const Home = () => {
    //const {state:loggedUser} = loggerUser();
 //const {state:items,dispatch:dispatchItems} = useItem();
-
+const [loading,setLoading] = useState(false);
 //get logged user
 const loggedUser = useSelector((state:RootState) => state.auth.user)
 const dispatch = useDispatch();
@@ -36,17 +36,17 @@ const dispatch = useDispatch();
        }
 
        if(response.ok){
-        toast.success("Items fetched successfully",{
-            duration:5000,
-            richColors:true
-        })
+        // toast.success("Items fetched successfully",{
+        //     duration:5000,
+        //     richColors:true
+        // })
          const data = await response.json();
         //filter items by logged user
-      const  loggedUserItem=data.filter((item:Item) => item.email === loggedUser.email);
-
+      const  loggedUserItems=data.filter((item:Item) => item.email === loggedUser.email);
+          
          //set items in the state
         //  dispatchItems({type:"SET_ITEMS",payload:loggedUserItem})
-
+        dispatch(addItems(loggedUserItems));
        }
       
 
