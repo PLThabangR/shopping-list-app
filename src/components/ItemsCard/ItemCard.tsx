@@ -1,5 +1,7 @@
-
-
+import { Button } from "../ui/button"
+import { useDispatch, useSelector } from "react-redux";
+import { deleteItem,updateItem } from "@/components/redux-toolkit/app/features/itemSlice";
+import { toast } from "sonner";
 
 
 interface ItemCardProps {
@@ -13,6 +15,36 @@ interface ItemCardProps {
 
 
 const ItemCard = (item:ItemCardProps) => {
+ const dispatch = useDispatch();
+ 
+ const openModal = () => {
+     
+ }
+
+ const deleteProduct =async () => {
+     
+    //delete item from json server
+    const response = await  fetch(`http://localhost:8000/items/${item.email}`,{method:'DELETE'})
+
+    if(!response.ok){
+        toast.error("Error deleting item",{
+            duration:5000,
+            richColors:true
+        })
+        return
+       }
+       if(response.ok){
+         dispatch(deleteItem(item));
+        toast.success("Item deleted successfully",{
+            duration:5000,
+            richColors:true
+        })
+       }
+
+    
+ }
+
+
   return (
     <div>
 
@@ -26,10 +58,8 @@ const ItemCard = (item:ItemCardProps) => {
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.name}</h5>
         </a>
         <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">{item.quantity}</div>
-        <div  className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            {item.notes}
-            
-        </div>
+       <Button variant="destructive" type='submit' onClick={openModal}   className='bg-[#C07858] font-bold  m-1 shrink-0  text-white hover:scale-110 hover:text-[#ede7e5]  hover:bg-[#3C3D42]'>Update</Button>
+       <Button variant="destructive" type='submit' onClick={deleteProduct}  className='bg-[#3C3D42] font-bold  m-1 shrink-0  text-white hover:scale-110 hover:text-[#ede7e5 ]  hover:bg-[#FF0033]'>Delete</Button>
     </div>
 </div>
 

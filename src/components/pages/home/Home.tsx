@@ -65,7 +65,7 @@ const items = useSelector((state:RootState) => state.items.items);
    }//end of get all items fumnction
 
    //Display items on card 
-   const DisplayItems = items.map((item:Item) => <ItemCard key={item.email} email={item.email} category={item.category} name={item.name} quantity={item.quantity} notes={item.notes} imageUrl={item.imageUrl}  />)
+   const DisplayItems = items.map((item:Item) => <ItemCard key={Math.floor(Math.random() * 1000)} email={item.email} category={item.category} name={item.name} quantity={item.quantity} notes={item.notes} imageUrl={item.imageUrl}  />)
 
 
    useEffect(()=>{

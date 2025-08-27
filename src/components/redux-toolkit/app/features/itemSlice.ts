@@ -22,7 +22,7 @@ name: "items",
     addItems: (state, action:PayloadAction<Item>) => {
         state.items.push(action.payload);
     },
-    updateItems:(state,action:PayloadAction<Item>)=>{
+    updateItem:(state,action:PayloadAction<Item>)=>{
         const updatedItem = action.payload;//get the updated item
 
         const itemToUpdate = state.items.find((item) => item.email === updatedItem.email);
@@ -33,7 +33,7 @@ name: "items",
         
     },//end of update
 
-    deleteItems:(state,action:{payload:{email:string}})=>{
+    deleteItem:(state,action:{payload:{email:string}})=>{
         const email = action.payload.email;
         state.items = state.items.filter((item) => item.email !== email);
         
@@ -51,5 +51,5 @@ name: "items",
 
 
   //exporting the slice
-  export const { addItems,updateItems,deleteItem,clearItems } = itemSlice.actions;
+  export const { addItems,updateItem,deleteItem,clearItems } = itemSlice.actions;
   export default itemSlice.reducer
