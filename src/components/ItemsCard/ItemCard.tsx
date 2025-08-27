@@ -5,15 +5,25 @@ import { toast } from "sonner";
 
 import type { Item } from "@/types/ShoppingList";
 
-
+//import modal
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { useState } from "react";
 
 
 
 const ItemCard = (item:Item) => {
  const dispatch = useDispatch();
- 
+ //open modal state
+ const [isModalOpen, setIsModalOpen] = useState(false);
  const openModal = () => {
-     
+     setIsModalOpen(true);
  }
 
  const deleteProduct =async (item:Item) => {
@@ -60,6 +70,20 @@ const ItemCard = (item:Item) => {
 
 
 
+{/* modal */}
+
+{ isModalOpen &&(<Dialog>
+  
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Are you absolutely sure?</DialogTitle>
+      <DialogDescription>
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
+      </DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>)}
 
 
     </div>
