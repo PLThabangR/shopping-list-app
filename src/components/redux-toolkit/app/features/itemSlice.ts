@@ -14,7 +14,7 @@ const initialState:ItemState = {
 }
 
 
-  createSlice({
+export const itemSlice =  createSlice({
 name: "items",
     initialState,
     reducers: {
@@ -23,13 +23,17 @@ name: "items",
     },
     updateItems:(state,action:{payload:{updatedItem:Item}})=>{
         const updatedItem = action.payload.updatedItem;
-        return state.items.filter((item) => item.email !== updatedItem.email)[0];
+        const itemToUpdate = state.items.find((item) => item.email === updatedItem.email);
+        //if item exist update it
+        if (itemToUpdate) {
+            state.items = state.items.map((item) => (item.email === updatedItem.email ? updatedItem : item));
+        }
         
     },//end of update
 
     deleteItems:(state,action:{payload:{email:string}})=>{
         const email = action.payload.email;
-        return state.items.filter((item) => item.email !== email)[0];
+        state.items = state.items.filter((item) => item.email !== email);
         
     }//end of delete
 
@@ -39,3 +43,7 @@ name: "items",
 
   })//end of createSlice
 
+
+  //exporting the slice
+  export const { addItems,updateItems,deleteItems } = itemSlice.actions;
+  export default itemSlice.reducer
