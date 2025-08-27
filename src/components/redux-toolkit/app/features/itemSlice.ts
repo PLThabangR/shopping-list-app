@@ -20,8 +20,6 @@ name: "items",
     reducers: {
         //My add reducer with type Item as payload
     addItems: (state, action:PayloadAction<Item>) => {
-        //Update the array by using push method
-        if(Array.isArray(action.payload)) state.items.push(...action.payload);
         state.items.push(action.payload);
     },
     updateItems:(state,action:PayloadAction<Item>)=>{

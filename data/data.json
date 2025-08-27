@@ -15,27 +15,17 @@
       "email": "khomotso@gmail.com",
       "password": "54321",
       "cellNumber": 612192144
+    },
+    {
+      "id": "b501",
+      "firstName": "John ",
+      "lastName": "doe",
+      "email": "johndoe@gmail.com",
+      "password": "12345",
+      "cellNumber": 826047782
     }
   ],
   "items": [
-    {
-      "id": "e3cd",
-      "name": "Iphone XR",
-      "email": "",
-      "quantity": 12,
-      "notes": "Phone",
-      "category": "appliances",
-      "imageUrl": "https://images.unsplash.com/photo-1693480532368-de842fb9dcf4?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YnJlYWQlMjB3aGl0ZSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D"
-    },
-    {
-      "id": "816e",
-      "name": "Watch",
-      "email": "",
-      "quantity": 4,
-      "notes": "Heater",
-      "category": "appliances",
-      "imageUrl": "https://images.unsplash.com/photo-1616410011236-7a42121dd981?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aXBob25lfGVufDB8fDB8fHww"
-    },
     {
       "id": "84ba",
       "name": "Iphone XR",

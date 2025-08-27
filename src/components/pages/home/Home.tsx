@@ -14,62 +14,23 @@ import { addItems } from "@/components/redux-toolkit/app/features/itemSlice";
 const Home = () => {
    //const {state:loggedUser} = loggerUser();
 //const {state:items,dispatch:dispatchItems} = useItem();
-const [loading,setLoading] = useState(false);
+
 
 //get logged user
 const loggedUser = useSelector((state:RootState) => state.auth.user)
-const dispatch = useDispatch();
+// const dispatch = useDispatch();
 
 const items = useSelector((state:RootState) => state.items.items);
 
-   const getAllItems =async () =>{
-      setLoading(true);
-
-    const response = await fetch('http://localhost:8000/items',{
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-
-       }) 
-       if(!response.ok){
-        toast.error("Error fetching items",{
-            duration:5000,
-            richColors:true
-        })
-        return
-       }
-
-       if(response.ok){
-        // toast.success("Items fetched successfully",{
-        //     duration:5000,
-        //     richColors:true
-        // })
-        setLoading(false);
-         const data = await response.json();
-         console.log("data from json server ",data)
-        //filter items by logged user
-      const  loggedUserItems=data.filter((item:Item) => item.email === loggedUser.email);
-           console.log("data from after filter ",loggedUserItems)
-        //Ad logged user items to items array
-
-        dispatch(addItems(loggedUserItems));
-       }
-      
-
-
-
-   }//end of get all items
+ 
 
    //Display items on card 
    const DisplayItems = items.map((item:Item) => <ItemCard key={item.email} email={item.email} category={item.category} name={item.name} quantity={item.quantity} notes={item.notes} imageUrl={item.imageUrl}  />)
 
 
    useEffect(()=>{
-getAllItems();
- console.log("items",items)
- console.log("logged user",loggedUser)
- console.log("logged user email",items.length)
+
+
 
    },[])
 

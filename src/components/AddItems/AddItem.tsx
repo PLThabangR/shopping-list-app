@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 import type { RootState } from '../redux-toolkit/app/store';
-
+import { useDispatch } from 'react-redux';
+import { addItems } from '../redux-toolkit/app/features/itemSlice';
 
 
 const AddItem = () => {
@@ -15,6 +16,7 @@ const AddItem = () => {
     //get logged user
 const LoggedUser = useSelector((state:RootState) => state.auth.user)
   
+const dispatch = useDispatch();
     //const {state:LoggedUser} = loggerUser();
  
     //form state
@@ -58,6 +60,9 @@ event.preventDefault();
        }//end of if
 
        if(response.ok){
+        
+        const data = await response.json();
+        dispatch(addItems(data));
         toast.success("Item added successfully",{
             duration:5000,
             richColors:true
