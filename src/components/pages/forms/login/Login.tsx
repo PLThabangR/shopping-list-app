@@ -1,13 +1,23 @@
 import React, { useState } from 'react'
 import { loggerUser, useUser } from "@/gobal state/userState";
-import { use, useEffect } from "react"
+import { useEffect } from "react"
 import { toast } from "sonner";
 import { Link, useNavigate } from 'react-router-dom';
 import type { User } from '@/types/User';
 
+//
+import { useSelector, useDispatch } from 'react-redux';
+//import auth reducer from auth slice
+import {login,logout} from '@/components/redux-toolkit/app/features/authSlice'
+import authSlice from '../../../redux-toolkit/app/features/authSlice';
+import type { Root } from 'react-dom/client';
 const Login = () => {
     //get users
     const {state:{users},dispatch} = useUser();
+    //use selector allows us to get the state from the store
+    const authUser = useSelector((state:RootState) => state.auth.user)
+    //use dispatch allows us to dispatch actions /to change state
+
 
     //navigate 
     const navigate = useNavigate();
@@ -108,7 +118,7 @@ const Login = () => {
     <div>
              <div className="container p-5  w-[60%] m-0 mx-auto">
 
-        <h1 className="text-5xl font-extrabold text-[#3C3D42]  m-5 p-2">Login to your account</h1>
+        <h1 className="text-5xl font-extrabold text-[#3C3D42] m-2 text-left p-2">Login </h1>
 <form onSubmit={handleSubmit}>
     <div className="grid gap-6 mb-6 md:grid-cols-2">
         
@@ -126,7 +136,7 @@ const Login = () => {
     </div> 
 
   
-    <button type="submit" className="text-white bg-[#C07858] hover:bg-[#cc927a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign in</button>
+    <button type="submit" className="text-white bg-[#C07858] hover:bg-[#cc927a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
       <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Do not have account <Link to="/register" className="text-blue-600 hover:underline dark:text-blue-500">Register</Link></label>
 </form>
 
