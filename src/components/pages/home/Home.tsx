@@ -4,21 +4,26 @@
 import ItemCard from "@/components/ItemsCard/ItemCard"
 import Navbar from "@/components/navbar/Navbar"
 import type { Item } from "@/types/ShoppingList";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/components/redux-toolkit/app/store";
+import { addItems } from "@/components/redux-toolkit/app/features/itemSlice";
 
 const Home = () => {
    //const {state:loggedUser} = loggerUser();
 //const {state:items,dispatch:dispatchItems} = useItem();
 const [loading,setLoading] = useState(false);
+
 //get logged user
 const loggedUser = useSelector((state:RootState) => state.auth.user)
 const dispatch = useDispatch();
 
+const items = useSelector((state:RootState) => state.items.items);
+
    const getAllItems =async () =>{
+
 
     const response = await fetch('http://localhost:8000/items',{
         method: 'GET',
@@ -28,7 +33,7 @@ const dispatch = useDispatch();
 
        }) 
        if(!response.ok){
-        toast.error("Error fetching item",{
+        toast.error("Error fetching items",{
             duration:5000,
             richColors:true
         })
@@ -44,19 +49,22 @@ const dispatch = useDispatch();
         //filter items by logged user
       const  loggedUserItems=data.filter((item:Item) => item.email === loggedUser.email);
           
-         //set items in the state
-        //  dispatchItems({type:"SET_ITEMS",payload:loggedUserItem})
+        //Ad logged user items to items array
         dispatch(addItems(loggedUserItems));
        }
       
 
 
 
-   }
+   }//end of get all items
+
+   //Display items on card 
+   const DisplayItems = items.map((item:Item) => <ItemCard key={item.email} item={items} />)
 
 
    useEffect(()=>{
 getAllItems();
+
 
    },[])
 
@@ -71,7 +79,7 @@ getAllItems();
           
         <div className="flex flex-col justify-center items-center  md:flex-row md:justify-evenly md:flex-wrap gap-1 ">
 
-       
+            {items.length > 0 ? <h1 className="text-2xl shrink-0 font-extrabold text-[#3C3D42] md:text-5xl text-center  m-2 p-2">No items found</h1> : DisplayItems}
           
         </div>
     </div>

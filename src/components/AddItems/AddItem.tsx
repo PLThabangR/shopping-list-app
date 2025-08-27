@@ -1,19 +1,20 @@
 import type { Item } from '@/types/ShoppingList';
 import React, {  useState } from 'react'
 import { toast } from 'sonner';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 import type { RootState } from '../redux-toolkit/app/store';
 
 
+
 const AddItem = () => {
   //get items hook
-   const LoggedUser = useSelector((state:RootState) => state.auth.user)
-  const items = useSelector((state:RootState) => state.items.items)
+  
+ 
     //get logged user
-
-  const dispatch = useDispatch()
+const LoggedUser = useSelector((state:RootState) => state.auth.user)
+  
     //const {state:LoggedUser} = loggerUser();
  
     //form state
