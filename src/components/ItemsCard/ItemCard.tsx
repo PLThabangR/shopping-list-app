@@ -59,11 +59,12 @@ const ItemCard = (item:Item) => {
         <img  src={item.imageUrl}  className="rounded-t-lg object-cover w-100 h-48 hover:scale-105 transition duration-500"  alt="" />
     </a>
     <div className="p-5">
-        <a>
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.name}</h5>
-        </a>
-        <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">Qty :{item.quantity}</div>
-       <Button variant="destructive"  onClick={openModal}   className='bg-[#C07858] font-bold  m-1 shrink-0  text-white hover:scale-110 hover:text-[#ede7e5]  hover:bg-[#3C3D42]'>Update</Button>
+             
+            <h5 className=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.name}</h5>
+         <div className=" font-bold text-gray-700 dark:text-gray-400">{item.category}</div>
+        <div className="font-normal text-gray-700 dark:text-gray-400">Qty :{item.quantity}</div>
+         <div className="mb-1 font-normal text-gray-700 dark:text-gray-400">Notes : { item.notes}</div>
+      <Button variant="destructive"  onClick={openModal}   className='bg-[#C07858] font-bold  m-1 shrink-0  text-white hover:scale-110 hover:text-[#ede7e5]  hover:bg-[#3C3D42]'>Update</Button>
        <Button variant="destructive"  onClick={()=>deleteProduct(item)}  className='bg-[#3C3D42] font-bold  m-1 shrink-0  text-white hover:scale-110 hover:text-[#ede7e5 ]  hover:bg-[#FF0033]'>Delete</Button>
     </div>
 </div>
@@ -72,11 +73,11 @@ const ItemCard = (item:Item) => {
 
 {/* modal */}
 
-{ isModalOpen &&(<Dialog>
+{ (<Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
   
   <DialogContent>
     <DialogHeader>
-      <DialogTitle>Are you absolutely sure?</DialogTitle>
+      <DialogTitle>Update Item</DialogTitle>
       <DialogDescription>
         This action cannot be undone. This will permanently delete your account
         and remove your data from our servers.
