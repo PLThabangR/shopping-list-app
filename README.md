@@ -13,6 +13,7 @@
    ```
 
 ## Step 2 
+- install app dependencies using npm
 ```sh
  npm install
  ``` 
