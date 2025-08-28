@@ -20,7 +20,7 @@
 ## Step 3 
 - To run app
   ```sh
-- npm start
+   npm start
    ``` 
 
 # 📂 Project Structure
