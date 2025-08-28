@@ -9,7 +9,7 @@
 ## step 1
 - Clone this project using git clone 
   ```sh
-   git clone <https://github.com/PLThabangR/shopping-list-app.git>
+   git clone https://github.com/PLThabangR/shopping-list-app.git
    ```
 
 ## Step 2 
