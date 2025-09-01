@@ -4,6 +4,7 @@ import type { User } from '../../../../types/User';
 
 
 const user: User = { //initial user of type User
+    id: 0,
     email: "",
     password: "",
     firstName: "",

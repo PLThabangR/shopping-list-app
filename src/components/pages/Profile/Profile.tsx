@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '@/components/redux-toolkit/app/features/authSlice';
 
 
 
@@ -70,13 +72,13 @@ useEffect(() => {
     
     //Update user from json server
     const response = await fetch(`http://localhost:8000/${user.id}`,{
-            method:"put",
+            method:"PUT",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(user) //Convert user object javascript string 
         })
         //Check if response is ok
         if(!response.ok){
-            toast.error("Update failed",{
+            toast.error("Update user failed",{
                 duration:5000,
                 richColors:true
             })
@@ -86,9 +88,9 @@ useEffect(() => {
         if(response.ok){
              //Get response and convert to javascript json
             // const data = await response.json();
-          
+            useDispatch(updateUser(user));
  //Show success message
-             toast.success("Registration successful",{
+             toast.success("User updated successful",{
             duration:5000,
             richColors:true
         })
