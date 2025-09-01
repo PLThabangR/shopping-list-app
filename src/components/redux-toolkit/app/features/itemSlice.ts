@@ -5,17 +5,21 @@ import type { Item } from '../../../../types/ShoppingList';
 
 
 interface ItemState{
-    items:Item[]
+    items:Item[],
+      searchResults:Item[] //search array
 }
 
 // item initial state
 const initialState:ItemState = {
-    items:[]
+    items:[],
+    searchResults:[]
+  
 }
 
 
 export const itemSlice =  createSlice({
 name: "items",
+   
     initialState,
     reducers: {
         //My add reducer with type Item as payload
@@ -36,8 +40,10 @@ name: "items",
 
     //seacrh by name
     searchByName: (state, action: PayloadAction<string>) => {
+        //get the search term
         const searchTerm = action.payload;
-        state.items = state.items.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+        //filter items by search term
+        state.searchResults = state.items.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
       },
 
     deleteItem:(state,action:PayloadAction<Item>)=>{
