@@ -14,8 +14,9 @@ const Navbar = () => {
      //Destructure to to avoid conflict with user reducer
        //const {state:loggetedUser,dispatch:dispatchLoggedUser} = loggerUser();
 
-     const loggedUser = useSelector((state:RootState) => state.auth.user)
+    // const loggedUser = useSelector((state:RootState) => state.auth.user)
 const dispatch = useDispatch();
+//hooks
   const  navigate= useNavigate();
     const logoutUser = () => {
         //clear local storage
