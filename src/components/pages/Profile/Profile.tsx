@@ -10,9 +10,10 @@ import { updateUser } from '@/components/redux-toolkit/app/features/authSlice';
 
 const Profile = (userProp:User) => {
 
+
   console.log("userProp",userProp)
     //hooks
-// const dispatch = useDispatch();
+const dispatch = useDispatch();
  //use navigate hook
     const navigate = useNavigate();
 
@@ -86,9 +87,8 @@ useEffect(() => {
            
        //Check if response is ok
         if(response.ok){
-             //Get response and convert to javascript json
-            // const data = await response.json();
-            useDispatch(updateUser(user));
+           //use dispatch to update state
+          dispatch(updateUser(user));
  //Show success message
              toast.success("User updated successful",{
             duration:5000,

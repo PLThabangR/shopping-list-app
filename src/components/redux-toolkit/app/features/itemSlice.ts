@@ -22,6 +22,7 @@ name: "items",
     addItems: (state, action:PayloadAction<Item>) => {
         state.items.push(action.payload);
     },
+    
     updateItem:(state,action:PayloadAction<Item>)=>{
         const updatedItem = action.payload;//get the updated item
 

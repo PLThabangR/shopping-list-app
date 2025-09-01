@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { User } from '../../../../types/User';
 
 
@@ -23,23 +23,32 @@ export const authSlice = createSlice({
     // Reducers are like instructions of what to do with the each slice of the cake
     //they define how the information in a particular slice is updated/changed
     reducers: {
+        //Destructured function argument {payload: User}
         login: (state, action: { payload: User }) => {
             console.log("action from login ",action)
             //set logged user in local storage
      localStorage.setItem("email", JSON.stringify(action.payload.email));
             state.user = action.payload;
-        },
+        },//end of login
         logout: (state) => {
             //clear state on logout
             state.user = user;
-        },
+        },//end of logout
 
-        updateUser: (state, action: { payload: User }) => {
-            //update user state
-            state.user = action.payload;
-        }
-    },
-});
+        //Undestructred function argument using PayloadAction<User> syntax
+        updateUser: (state, action: PayloadAction<User>) => {
+           // Destruncture the payload and get the user
+            const updatedUser = action.payload;
+            //if user exist update it
+            if (state.user) {
+                state.user = updatedUser; //set the user to the updated user
+            }
+
+           
+
+        },//end of updateUser
+    },//end of reducers
+});//end of authSlice
 
 //we export the actions functions
 export const { login, logout,updateUser } = authSlice.actions;
