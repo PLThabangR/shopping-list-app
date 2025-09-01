@@ -69,10 +69,10 @@ useEffect(() => {
     }//end of if statement 
 
    
-
+    
     
     //Update user from json server
-    const response = await fetch(`http://localhost:8000/${user.id}`,{
+    const response = await fetch(`http://localhost:8000/users/${user.id}`,{
             method:"PUT",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(user) //Convert user object javascript string 
