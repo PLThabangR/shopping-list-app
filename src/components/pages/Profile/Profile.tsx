@@ -95,7 +95,7 @@ useEffect(() => {
             richColors:true
         })
         //navigate user to login
-        navigate("/")
+        navigate("/home")
         }//End of if statement
          
       }///End of handle submit
