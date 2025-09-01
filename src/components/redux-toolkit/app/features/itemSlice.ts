@@ -22,7 +22,7 @@ name: "items",
     addItems: (state, action:PayloadAction<Item>) => {
         state.items.push(action.payload);
     },
-    
+
     updateItem:(state,action:PayloadAction<Item>)=>{
         const updatedItem = action.payload;//get the updated item
 
@@ -33,6 +33,12 @@ name: "items",
         }
         
     },//end of update
+
+    //seacrh by name
+    searchByName: (state, action: PayloadAction<string>) => {
+        const searchTerm = action.payload;
+        state.items = state.items.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+      },
 
     deleteItem:(state,action:PayloadAction<Item>)=>{
         const id = action.payload.id;//get the item id
@@ -52,5 +58,5 @@ name: "items",
 
 
   //exporting the slice
-  export const { addItems,updateItem,deleteItem,clearItems } = itemSlice.actions;
+  export const { addItems,updateItem,deleteItem,clearItems,searchByName } = itemSlice.actions;
   export default itemSlice.reducer
