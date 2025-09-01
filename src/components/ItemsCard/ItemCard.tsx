@@ -19,47 +19,71 @@ import { useState } from "react";
 
 
 const ItemCard = (item:Item) => {
+    //hooks
  const dispatch = useDispatch();
+
+ //set the inital state with the props value
+ const [itemState,setItemState] = useState<Item>(item);
+
+ //Destructure props value 
+// const { id, name, email, quantity, notes, category, imageUrl } = item;
+
  //open modal state
  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
      //const {state:LoggedUser} = loggerUser();
   
-     //form state
-     const [name,setName] = useState<string>('');
-     const [quantity,setQuantity] = useState<number>(0);
-     const [notes,setNotes] = useState<string>('');
-     const [category,setCategory] = useState<string>('');
-     const [imageUrl,setImageUrl] = useState<string>('');
+
+     //this function will open the modal by setting the vthe state to true
  const openModal = () => {
+
      setIsModalOpen(true);
  }
 //update item
-const updateProduct =async (item:Item) => {
+const updateProduct =async (itemToBeUpdated:Item) => {
+  console.log("item to be updated",itemToBeUpdated)
     
-    //delete item from json server
-    const response = await fetch(`http://localhost:8000/items/${item.id}`,{
+    //Update item from json server
+    const response = await fetch(`http://localhost:8000/items/${itemToBeUpdated.id}`,{
         method:'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(item),
+           //Send the updated job object as a javascropt object string
+        body: JSON.stringify(itemToBeUpdated),
        }) 
+        //if the response is not ok throw error
        if(!response.ok){
         toast.error("Error updating item",{
             duration:5000,
             richColors:true
         })
        }
+ //if the response is ok
+       if(response.ok){
+
+        //update item from state the dispacth method
+        dispatch(updateItem(itemToBeUpdated));
+        //update item from state this will update the ui
+        toast.success("Item updated successfully",{
+            duration:5000,
+            richColors:true
+        })
+
+        setIsModalOpen(false);
+       }//end of it
+
+
 }
 
- const deleteProduct =async (item:Item) => {
+ const deleteProduct =async (itemToBeDeleted:Item) => {
     
     //delete item from json server
-    const response = await  fetch(`http://localhost:8000/items/${item.id}`,{method:'DELETE'})
-
+    const response = await  fetch(`http://localhost:8000/items/${itemToBeDeleted.id}`,{method:'DELETE'})
+    //if the response is not ok throw error
     if(!response.ok){
+        //Show toast with an error to the user
         toast.error("Error deleting item",{
             duration:5000,
             richColors:true
@@ -67,10 +91,11 @@ const updateProduct =async (item:Item) => {
         return
        }
 
-       console.log(response)
+    
        if(response.ok){
         //delete item from state this will update the ui
-         dispatch(deleteItem(item));
+         dispatch(deleteItem(itemToBeDeleted));
+         //Show toast with a success to the user
         toast.success("Item deleted successfully",{
             duration:5000,
             richColors:true
@@ -117,23 +142,23 @@ const updateProduct =async (item:Item) => {
         
         <div>
             <label htmlFor="name" className="block mb-2 text-md font-medium text-gray-900 dark:text-white">Name</label>
-            <input type="text" id="name" value={item.name} onChange={(e) => setName(()=> e.target.value )} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bread" required />
+            <input type="text" id="name" value={itemState.name} onChange={(e) => setItemState({...itemState,name:e.target.value})} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bread" required />
         </div>
         <div>
             <label htmlFor="quantity" className="block mb-2 text-md font-medium text-gray-900 dark:text-white">Quantity</label>
-            <input type="text" id="quantity" value={item.quantity} onChange={(e) => setQuantity(()=> Number(e.target.value) )} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="10" required />
+            <input type="text" id="quantity" value={itemState.quantity} onChange={(e) => setItemState({...itemState,quantity:Number(e.target.value)})} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="10" required />
         </div>
         
         
     </div>
     <div className="mb-6">
         <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-        <input type="text" id="description" value={item.notes} onChange={(e) => setNotes(()=> e.target.value )} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="description" required />
+        <input type="text" id="description" value={itemState.notes} onChange={(e) => setItemState({...itemState,notes:e.target.value})} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="description" required />
     </div> 
     <div className="mb-6">
 
          <label htmlFor="categories" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-  <select id="categories" value={item.category} onChange={(e) => setCategory(()=> e.target.value )} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <select id="categories" value={itemState.category} onChange={(e) => setItemState({...itemState,category:e.target.value})} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
     <option value="fruits">Fruits</option>
     <option value={'vegetables'}>Vegetables</option>
@@ -151,10 +176,10 @@ const updateProduct =async (item:Item) => {
 
     <div className="mb-6">
         <label htmlFor="imageUrl" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image url</label>
-        <input type="text" id="imageUrl" value={item.imageUrl} onChange={(e) => setImageUrl(()=> e.target.value )} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://picsum.photos/200/300" required />
+        <input type="text" id="imageUrl" value={itemState.imageUrl} onChange={(e) => setItemState({...itemState,imageUrl:e.target.value})} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://picsum.photos/200/300" required />
     </div> 
     
-    <button type="submit" className="text-white bg-[#C07858] hover:bg-[#cc927a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 m-2">Update item </button>
+    <button type="button" onClick={()=>updateProduct(itemState)} className="text-white bg-[#C07858] hover:bg-[#cc927a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 m-2">Update item </button>
     
    
 </form>
