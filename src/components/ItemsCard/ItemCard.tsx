@@ -36,61 +36,26 @@ const ItemCard = (item:Item) => {
      setIsModalOpen(true);
  }
 //update item
-const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
-event.preventDefault();
-
-
- //creat new item
-        const newItem:Item = {
-            name,
-            email:LoggedUser.email,
-            quantity,
-            notes,
-            category,
-            imageUrl
-        }
-        //add new item to state
-      
-
-       
-
-       const response = await fetch('http://localhost:8000/items', {
-        method: 'POST',
+const updateProduct =async (item:Item) => {
+    
+    //delete item from json server
+    const response = await fetch(`http://localhost:8000/items/${item.id}`,{
+        method:'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newItem),
+        body: JSON.stringify(item),
        }) 
        if(!response.ok){
-        toast.error("Error adding item",{
+        toast.error("Error updating item",{
             duration:5000,
             richColors:true
         })
-       }//end of if
-
-       if(response.ok){
-        
-        const data = await response.json();
-        dispatch(addItems(data));
-        toast.success("Item added successfully",{
-            duration:5000,
-            richColors:true
-
-        })
-
-
-          //clear form
-        setName('');
-        setQuantity(0);
-        setNotes('');
-        setCategory('');
-        setImageUrl('');
-
        }
-
 }
+
  const deleteProduct =async (item:Item) => {
-     console.log(item)
+    
     //delete item from json server
     const response = await  fetch(`http://localhost:8000/items/${item.id}`,{method:'DELETE'})
 
@@ -101,7 +66,10 @@ event.preventDefault();
         })
         return
        }
+
+       console.log(response)
        if(response.ok){
+        //delete item from state this will update the ui
          dispatch(deleteItem(item));
         toast.success("Item deleted successfully",{
             duration:5000,
@@ -138,10 +106,13 @@ event.preventDefault();
 
 { (<Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Update Item</DialogTitle>
+          </DialogHeader>
         <div className="container  w-[100%] m-0 mx-auto">
 
         
-<form onSubmit={handleSubmit}>
+<form >
     <div className="grid gap-6 mb-6 md:grid-cols-2">
         
         <div>
