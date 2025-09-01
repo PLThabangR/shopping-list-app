@@ -14,10 +14,11 @@ import LandingPage from './components/pages/landingPage/LandingPage';
 import Protected from './components/pages/protectedPages/Protected';
 import Profile from './components/pages/Profile/Profile';
 import AddItem from './components/AddItems/AddItem';
-
+import { useSelector } from 'react-redux';
+import type { User } from './types/User';
 function App() {
-  const [count, setCount] = useState(0)
-
+  //find the current user from the auth state 
+const user:User = useSelector((state: any) => state.auth.user);
   return (
     <>
 
@@ -30,7 +31,8 @@ function App() {
            <Route path="/landing" element={<LandingPage/>} />
 
            <Route path="/home" element={<Protected><Home /></Protected>} />
-           <Route path="/profile" element={<Protected><Profile /></Protected>} />
+           {/* This is a protected route passing the user object as a prop */}
+           <Route path="/profile" element={<Protected><Profile {...user} /></Protected>} />
            <Route path="/add-item" element={<Protected><AddItem /></Protected>} />
         </Routes>
 

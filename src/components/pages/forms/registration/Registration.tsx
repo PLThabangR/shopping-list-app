@@ -140,12 +140,6 @@ const Registration = () => {
 
 
 
- useEffect(() => {
-    //Get all data
-  
-    
- }, [])
-
   return (
     <div className="container p-5 w-[60%] m-0 mx-auto">
 

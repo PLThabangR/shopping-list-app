@@ -32,10 +32,15 @@ export const authSlice = createSlice({
             //clear state on logout
             state.user = user;
         },
+
+        updateUser: (state, action: { payload: User }) => {
+            //update user state
+            state.user = action.payload;
+        }
     },
 });
 
 //we export the actions functions
-export const { login, logout } = authSlice.actions;
+export const { login, logout,updateUser } = authSlice.actions;
 //we export the our reducer from our authSlice hence we use authSlice.reducer
 export default authSlice.reducer;

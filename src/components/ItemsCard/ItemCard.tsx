@@ -1,5 +1,5 @@
 import { Button } from "../ui/button"
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteItem,updateItem } from "@/components/redux-toolkit/app/features/itemSlice";
 import { toast } from "sonner";
 
@@ -9,10 +9,10 @@ import type { Item } from "@/types/ShoppingList";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+
 } from "@/components/ui/dialog"
 import { useState } from "react";
 
@@ -22,7 +22,7 @@ const ItemCard = (item:Item) => {
     //hooks
  const dispatch = useDispatch();
 
- //set the inital state with the props value
+ //initalize the state with the props value
  const [itemState,setItemState] = useState<Item>(item);
 
  //Destructure props value 
@@ -42,8 +42,6 @@ const ItemCard = (item:Item) => {
  }
 //update item
 const updateProduct =async (itemToBeUpdated:Item) => {
-  console.log("item to be updated",itemToBeUpdated)
-    
     //Update item from json server
     const response = await fetch(`http://localhost:8000/items/${itemToBeUpdated.id}`,{
         method:'PUT',
