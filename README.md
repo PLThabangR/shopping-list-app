@@ -22,7 +22,14 @@
   ```sh
    npm start
    ``` 
-
+## 🛠️ Tech Stack
+- React (Frontend)
+- TypeScript (Type safety)
+- Shadcn UI (Tailwind)
+- React toolkit Query (State management)
+- JSON Server (Mock API)
+- Vite (Fast development environment)
+  
 # 📂 Project Structure
 
 - shoppin-list/
@@ -40,14 +47,7 @@
 
 Built with React + TypeScript for scalability
 
-🛠️ Tech Stack
-- React (Frontend)
 
-- TypeScript (Type safety)
-- Shadcn UI (Tailwind)
-- React tool kik (State management)
-- JSON Server (Mock API)
-- Vite (Fast development environment)
 
 
 🤝 Contributing
