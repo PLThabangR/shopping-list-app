@@ -43,7 +43,7 @@ const dispatch = useDispatch();
  
         <div className='flex flex-col items-center lg:flex-row  flex-wrap md:flex-row  space-x-2'>
             
-            <SeachByName />
+            <SeachByName/>
             <Link to="/profile">  <Button variant="destructive"  className='bg-[#FEF9EF] border-1 border-[#C07858] font-bold m-1 shrink-0 text-[#C07858] hover:scale-110 hover:text-[#ede7e5]  hover:bg-[#3C3D42]'>Profile</Button>  </Link>
             <Link to="/add-item">  <Button variant="destructive"  className='bg-[#FEF9EF] border-1 border-[#C07858] font-bold m-1 shrink-0 text-[#C07858] hover:scale-110 hover:text-[#ede7e5]  hover:bg-[#3C3D42]'>Add item</Button></Link>
 
